@@ -283,9 +283,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
                 
                 arraylistAux1.get(0).setProcessedTime();
                 for (int i = arraylistAux1.get(0).getCuantum(); i < arraylist.get(0).getTimeMin(); i+=arraylistAux1.get(0).getCuantum()) {
-                    if (i == ) {
-                        
-                    }
+                    
                 }
             }
         }else{
