@@ -268,7 +268,26 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     private void stepByStepMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stepByStepMouseReleased
         System.out.println("link: "+jList1.getModel().getSize());
         if(jList1.getModel().getSize()!=0 || (jList1.getModel().getSize()!=0 || jTable1.getRowCount()>0)){
-            
+            if(jTable1.getRowCount()>0){
+//                modelList2.removeAllElements();
+//                arraylistAux1.add(arraylist.get(0));
+//                Proceso auxProcess1 = arraylist.get(0);
+//                arraylist.remove(0);
+//                String info = "<html>Nombre proceso: "+auxProcess1.getNameProc()+
+//                              "<br>Porcentaje ejecutado: "+auxProcess1.getPercentage()+"%"
+//                            + "<br>"+1234123+"</html>";
+//                modelList2.addElement(info);
+//                jList1.setModel(modelList2);
+//                modelTable.removeRow(0);
+                arraylistAux1.add(arraylist.get(0));
+                
+                arraylistAux1.get(0).setProcessedTime();
+                for (int i = arraylistAux1.get(0).getCuantum(); i < arraylist.get(0).getTimeMin(); i+=arraylistAux1.get(0).getCuantum()) {
+                    if (i == ) {
+                        
+                    }
+                }
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Primero comience un proceso");
         }
