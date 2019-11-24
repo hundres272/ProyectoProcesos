@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author hugoa_kaskhih
  */
 public class VentanaPrincipal extends javax.swing.JDialog {
-    private DefaultListModel modelList1,modelList2;
+    private DefaultListModel modelList1,modelList2,modelList3;
     private DefaultTableModel modelTable;
     private String[] namesProcess = {"Proceso 1","Proceso 2","Proceso 3","Proceso 4","Proceso 5"};
     private ArrayList<Proceso> arraylist = new ArrayList();
@@ -37,10 +37,11 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     private void drivingListOne(){
         modelList1 = new DefaultListModel();
         modelList2 = new DefaultListModel();
+        modelList3 = new DefaultListModel();
         for (int i = 0; i < namesProcess.length; i++) {
-            modelList1.addElement(namesProcess[i]);
+            modelList2.addElement(namesProcess[i]);
         }
-        jList2.setModel(modelList1);
+        jList2.setModel(modelList2);
     }
 
     /**
@@ -165,12 +166,13 @@ public class VentanaPrincipal extends javax.swing.JDialog {
         });
 
         jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane4.setViewportView(jList3);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Estado Suspendido");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -182,16 +184,17 @@ public class VentanaPrincipal extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 33, Short.MAX_VALUE)
-                                .addComponent(stepByStep)))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(21, 21, 21))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(stepByStep)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(21, 21, 21))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,9 +218,11 @@ public class VentanaPrincipal extends javax.swing.JDialog {
             int number = jList2.getSelectedIndex();
             String processText = jList2.getModel().getElementAt(number);
             
-            modifyTable(processText);
-
-            modelList1.remove(number);
+           
+            Proceso newProcess = new Proceso(processText,generatePid());
+            modifyTable(newProcess);
+            
+            modelList2.remove(number);
         } catch (ArrayIndexOutOfBoundsException ex) {
             if(Integer.parseInt(ex.getMessage()) == -1){
                 JOptionPane.showMessageDialog(null, "Seleccione un proceso");
@@ -225,8 +230,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_startProcessMouseReleased
 
-    private void modifyTable(String processText){
-        Proceso newProcess = new Proceso(processText,generatePid());
+    private void modifyTable(Proceso newProcess){
         boolean aux = true;
         
         if(arraylist.size() != 0){
@@ -267,30 +271,88 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     
     private void stepByStepMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stepByStepMouseReleased
         System.out.println("link: "+jList1.getModel().getSize());
-        if(jList1.getModel().getSize()!=0 || (jList1.getModel().getSize()!=0 || jTable1.getRowCount()>0)){
+        if(jList1.getModel().getSize()!=0 || (jList3.getModel().getSize()!=0 || jTable1.getRowCount()>0)){
             if(jTable1.getRowCount()>0){
-//                modelList2.removeAllElements();
+                if (jList1.getModel().getSize()!=0) {
+                    arraylistAux2.add(arraylistAux1.get(0));
+                    arraylistAux1.remove(0);
+                    modelList1.removeAllElements();
+                    jList1.setModel(modelList1);
+                    
+                    manejoEspecialList3();
+                }
+                
+                arraylistAux1.add(arraylist.get(0));
+                arraylist.remove(0);
+                modelTable.removeRow(0);
+                jTable1.setModel(modelTable);
+                String info = "<html>Nombre proceso: "+arraylistAux1.get(0).getNameProc()+
+                              "<br>Porcentaje ejecutado: "+arraylistAux1.get(0).getPercentage()+"%"
+                            + "<br>"+1234123+"</html>";
+                modelList1.addElement(info);
+                jList1.setModel(modelList1);
+                
+                
+//                modelList1.removeAllElements();
 //                arraylistAux1.add(arraylist.get(0));
 //                Proceso auxProcess1 = arraylist.get(0);
 //                arraylist.remove(0);
 //                String info = "<html>Nombre proceso: "+auxProcess1.getNameProc()+
 //                              "<br>Porcentaje ejecutado: "+auxProcess1.getPercentage()+"%"
 //                            + "<br>"+1234123+"</html>";
-//                modelList2.addElement(info);
-//                jList1.setModel(modelList2);
+//                modelList1.addElement(info);
+//                jList1.setModel(modelList1);
 //                modelTable.removeRow(0);
-                arraylistAux1.add(arraylist.get(0));
-                
-                arraylistAux1.get(0).setProcessedTime();
-                for (int i = arraylistAux1.get(0).getCuantum(); i < arraylist.get(0).getTimeMin(); i+=arraylistAux1.get(0).getCuantum()) {
-                    
-                }
             }
         }else{
+//            Debe tener en cuenta los casos de ejecución y pausa
             JOptionPane.showMessageDialog(null, "Primero comience un proceso");
         }
     }//GEN-LAST:event_stepByStepMouseReleased
 
+    private void manejoEspecialList3(){
+        if (arraylistAux2.size() > 0) {
+            System.out.println("error1");
+            for (int i = 0; i < arraylistAux2.size(); i++) {
+                System.out.println("error2");
+                if (arraylistAux2.get(i).getUserResponse()>0 ) {
+                    System.out.println("error3");
+                    if (arraylistAux2.get(i).getAuxUserResponse() == 0) {
+                        System.out.println("error4");
+                        Proceso newProcess = new Proceso(arraylistAux2.get(i).getNameProc(),
+                                                         arraylistAux2.get(i).getPid(),
+                                                         arraylistAux2.get(i).getUserResponse()-1,
+                                                         arraylistAux2.get(i).getTimeMin(),
+                                                         arraylistAux2.get(i).getRataCuantum());
+                        modifyTable(newProcess);
+                        arraylistAux2.remove(i);
+                        modelList3.remove(i);
+                        jList3.setModel(modelList3);
+                    }else{
+                        System.out.println("error5");
+                        arraylistAux2.get(i).setAuxUserResponse(0);
+                    }
+                }else{
+                    Proceso newProcess = new Proceso(arraylistAux2.get(i).getNameProc(),
+                                                     arraylistAux2.get(i).getPid(),0,
+                                                     arraylistAux2.get(i).getTimeMin(),
+                                                     arraylistAux2.get(i).getRataCuantum());
+                    modifyTable(newProcess);
+                    arraylistAux2.remove(i);
+                    modelList3.remove(i);
+                    jList3.setModel(modelList3);
+                }
+            }
+        }
+        System.out.println("error7");
+        String info = "<html>Nombre proc.: "+arraylistAux2.get(arraylistAux2.size()-1).getNameProc()
+                    + "<br>PID: "+arraylistAux2.get(arraylistAux2.size()-1).getPid()+"</html>";
+        System.out.println("error8");
+        modelList3.addElement(info);
+        System.out.println("error9");
+        jList3.setModel(modelList3);
+    }
+    
     private int generatePid(){
         Random  ran = new Random();
         int value = ((int)(ran.nextDouble() * 1000 + 1));
