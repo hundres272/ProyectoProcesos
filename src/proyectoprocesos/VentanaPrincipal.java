@@ -334,7 +334,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
                     }
                 }else{
                     Proceso newProcess = new Proceso(arraylistAux2.get(i).getNameProc(),
-                                                     arraylistAux2.get(i).getPid(),0,
+                                                     arraylistAux2.get(i).getPid(),1,
                                                      arraylistAux2.get(i).getTimeMin(),
                                                      arraylistAux2.get(i).getRataCuantum());
                     modifyTable(newProcess);
@@ -346,7 +346,8 @@ public class VentanaPrincipal extends javax.swing.JDialog {
         }
         System.out.println("error7");
         String info = "<html>Nombre proc.: "+arraylistAux2.get(arraylistAux2.size()-1).getNameProc()
-                    + "<br>PID: "+arraylistAux2.get(arraylistAux2.size()-1).getPid()+"</html>";
+                    + "<br>PID: "+arraylistAux2.get(arraylistAux2.size()-1).getPid()
+                    +"<br>Interacciones Usuario: "+arraylistAux2.get(arraylistAux2.size()-1).getUserResponse()+"</html>";
         System.out.println("error8");
         modelList3.addElement(info);
         System.out.println("error9");
