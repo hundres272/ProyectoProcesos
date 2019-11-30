@@ -23,6 +23,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     private ArrayList<Proceso> arraylist = new ArrayList();
     private ArrayList<Proceso> arraylistAux1 = new ArrayList();
     private ArrayList<Proceso> arraylistAux2 = new ArrayList();
+    private ArrayList<Integer> availabilityPID = new ArrayList();
     /**
      * Creates new form VentanaPrincipal
      */
@@ -355,25 +356,40 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     }
     
     private int generatePid(){
-        Random  ran = new Random();
-        int value = ((int)(ran.nextDouble() * 1000 + 1));
-        boolean verify = true;
-        System.out.println("value: "+value);
-        if (arraylist.size() > 0) {
-            for (int i = 0; i < arraylist.size(); i++) {
-                if (value == arraylist.get(i).getPid()) {
-                    verify = false;
-                    break;
+        System.out.println("prde_ ");
+        if (availabilityPID.size()>0) {
+            for (int i = 0; i < availabilityPID.size(); i++) {
+                if (availabilityPID.get(i)!=(i+1)) {
+                    availabilityPID.add(i, (i+1));
+                    return i+1;
                 }
             }
-        }
-        if (verify) {
-            return value;
+            availabilityPID.add(availabilityPID.size()+1);
+            return availabilityPID.size();
         }else{
-            value = generatePid();
+            availabilityPID.add(1);
+            return 1;
         }
         
-        return value;
+//        Random  ran = new Random();
+//        int value = ((int)(ran.nextDouble() * 1000 + 1));
+//        boolean verify = true;
+//        System.out.println("value: "+value);
+//        if (arraylist.size() > 0) {
+//            for (int i = 0; i < arraylist.size(); i++) {
+//                if (value == arraylist.get(i).getPid()) {
+//                    verify = false;
+//                    break;
+//                }
+//            }
+//        }
+//        if (verify) {
+//            return value;
+//        }else{
+//            value = generatePid();
+//        }
+//        
+//        return value;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
