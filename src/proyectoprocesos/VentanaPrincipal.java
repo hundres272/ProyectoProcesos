@@ -272,65 +272,67 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     
     private void stepByStepMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stepByStepMouseReleased
         System.out.println("link: "+jList1.getModel().getSize());
-        if(jList1.getModel().getSize()!=0 || (jList3.getModel().getSize()!=0 || jTable1.getRowCount()>0)){
-            if(jTable1.getRowCount()>0){
-                if (jList1.getModel().getSize()!=0) {
-                    arraylistAux2.add(arraylistAux1.get(0));
-                    arraylistAux1.remove(0);
-                    modelList1.removeAllElements();
+        try {
+            if(jList1.getModel().getSize()!=0 || (jList3.getModel().getSize()!=0 || jTable1.getRowCount()>0)){
+                if(jTable1.getRowCount()>0){
+                    if (jList1.getModel().getSize()!=0) {
+                        if (arraylistAux1.get(0).getPercentage() == 100) {
+                            modelList2.addElement(arraylistAux1.get(0).getNameProc());
+                            arraylistAux1.remove(0);
+                            modelList1.removeAllElements();
+                            jList1.setModel(modelList1);
+                            jList2.setModel(modelList2);
+                        }else{
+                            arraylistAux2.add(arraylistAux1.get(0));
+                            arraylistAux1.remove(0);
+                            modelList1.removeAllElements();
+                            jList1.setModel(modelList1);
+
+                            manejoEspecialList3();
+                        }
+                    }
+
+                    arraylistAux1.add(arraylist.get(0));
+                    arraylist.remove(0);
+                    modelTable.removeRow(0);
+                    jTable1.setModel(modelTable);
+                    String info = "<html>Nombre proceso: "+arraylistAux1.get(0).getNameProc()+
+                                  "<br>Pid: "+arraylistAux1.get(0).getPid()+
+                                  "<br>Interacciones con el usuario: "+arraylistAux1.get(0).getUserResponse()
+                                + "<br>Porcentaje ejecutado: "+arraylistAux1.get(0).getPercentage()+"%</html>";
+                    modelList1.addElement(info);
                     jList1.setModel(modelList1);
-                    
-                    manejoEspecialList3();
                 }
-                
-                arraylistAux1.add(arraylist.get(0));
-                arraylist.remove(0);
-                modelTable.removeRow(0);
-                jTable1.setModel(modelTable);
-                String info = "<html>Nombre proceso: "+arraylistAux1.get(0).getNameProc()+
-                              "<br>Porcentaje ejecutado: "+arraylistAux1.get(0).getPercentage()+"%"
-                            + "<br>"+1234123+"</html>";
-                modelList1.addElement(info);
-                jList1.setModel(modelList1);
-                
-                
-//                modelList1.removeAllElements();
-//                arraylistAux1.add(arraylist.get(0));
-//                Proceso auxProcess1 = arraylist.get(0);
-//                arraylist.remove(0);
-//                String info = "<html>Nombre proceso: "+auxProcess1.getNameProc()+
-//                              "<br>Porcentaje ejecutado: "+auxProcess1.getPercentage()+"%"
-//                            + "<br>"+1234123+"</html>";
-//                modelList1.addElement(info);
-//                jList1.setModel(modelList1);
-//                modelTable.removeRow(0);
+            }else{
+    //            Debe tener en cuenta los casos de ejecución y pausa
+                JOptionPane.showMessageDialog(null, "Primero comience un proceso");
             }
-        }else{
-//            Debe tener en cuenta los casos de ejecución y pausa
-            JOptionPane.showMessageDialog(null, "Primero comience un proceso");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            System.out.println("Error inesperado");
         }
+        
     }//GEN-LAST:event_stepByStepMouseReleased
 
     private void manejoEspecialList3(){
         if (arraylistAux2.size() > 0) {
-            System.out.println("error1");
+//            System.out.println("error1");
             for (int i = 0; i < arraylistAux2.size(); i++) {
-                System.out.println("error2");
+//                System.out.println("error2");
                 if (arraylistAux2.get(i).getUserResponse()>0 ) {
-                    System.out.println("error3");
+//                    System.out.println("error3");
                     if (arraylistAux2.get(i).getAuxUserResponse() == 0) {
-                        System.out.println("error4");
+//                        System.out.println("error4");
                         Proceso newProcess = new Proceso(arraylistAux2.get(i).getNameProc(),
                                                          arraylistAux2.get(i).getPid(),
                                                          arraylistAux2.get(i).getUserResponse()-1,
                                                          arraylistAux2.get(i).getTimeMin(),
-                                                         arraylistAux2.get(i).getRataCuantum());
+                                                         arraylistAux2.get(i).getPercentage());
                         modifyTable(newProcess);
                         arraylistAux2.remove(i);
                         modelList3.remove(i);
                         jList3.setModel(modelList3);
                     }else{
-                        System.out.println("error5");
+//                        System.out.println("error5");
                         arraylistAux2.get(i).setAuxUserResponse(0);
                     }
                 }else{
@@ -345,13 +347,18 @@ public class VentanaPrincipal extends javax.swing.JDialog {
                 }
             }
         }
-        System.out.println("error7");
-        String info = "<html>Nombre proc.: "+arraylistAux2.get(arraylistAux2.size()-1).getNameProc()
+//        System.out.println("error7");
+        int auxPorcentaje = arraylistAux2.get(arraylistAux2.size()-1).getPercentage();
+        int auxTimemin = arraylistAux2.get(arraylistAux2.size()-1).getTimeMin();
+        int auxRataC = arraylistAux2.get(arraylistAux2.size()-1).getRataCuantum();
+        arraylistAux2.get(arraylistAux2.size()-1).setPercentage(auxPorcentaje+(auxTimemin*100/auxRataC));
+        String info = "<html><br>Nombre proc.: "+arraylistAux2.get(arraylistAux2.size()-1).getNameProc()
                     + "<br>PID: "+arraylistAux2.get(arraylistAux2.size()-1).getPid()
-                    +"<br>Interacciones Usuario: "+arraylistAux2.get(arraylistAux2.size()-1).getUserResponse()+"</html>";
-        System.out.println("error8");
+                    +"<br>Interacciones Usuario: "+arraylistAux2.get(arraylistAux2.size()-1).getUserResponse()
+                    +"<br>Porcentaje ejecutado: "+arraylistAux2.get(arraylistAux2.size()-1).getPercentage()+"<br></html>";
+//        System.out.println("error8");
         modelList3.addElement(info);
-        System.out.println("error9");
+//        System.out.println("error9");
         jList3.setModel(modelList3);
     }
     
