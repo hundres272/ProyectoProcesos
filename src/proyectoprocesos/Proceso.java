@@ -15,21 +15,21 @@ import java.util.Random;
 public class Proceso extends javax.swing.JDialog {
     private String name;
     private int timeMin, priority, pid, userResponse, auxUserResponse;
-    private int rataCuantum, percentage, processedTime;
+    private int rataCuantum;
+    private float percentage;
     
     public Proceso(String nameProcess,int pidn){
         name = nameProcess;
         pid = pidn;
-        timeMin = generateRandomNumber(1, 10);
+        timeMin = generateRandomNumber(10, 100);
         priority = generateRandomNumber(1, 3);
         userResponse = generateRandomNumber(0, 2);
         auxUserResponse = 1;
         rataCuantum = 5;
         percentage = 0;
-        processedTime = 0;
     }
     
-    public Proceso(String nameProcess,int pidn,int userRespon,int timeMini, int perAux){
+    public Proceso(String nameProcess,int pidn,int userRespon,int timeMini, float perAux){
         name = nameProcess;
         pid = pidn;
         timeMin = timeMini;
@@ -38,7 +38,6 @@ public class Proceso extends javax.swing.JDialog {
         auxUserResponse = 1;
         rataCuantum = 5;
         percentage = perAux;
-        processedTime = 0;
     }
     
     public Object rowinfo(){
@@ -63,7 +62,7 @@ public class Proceso extends javax.swing.JDialog {
         return pid;
     }
     
-    public int getPercentage(){
+    public float getPercentage(){
         return percentage;
     }
     
@@ -71,12 +70,9 @@ public class Proceso extends javax.swing.JDialog {
         return rataCuantum;
     }
     
-    public void setProcessedTime(){
-        processedTime++;
-    }
-    
-    public void setPercentage(int perAux){
-        if (( perAux + timeMin*100/rataCuantum) >= 100) {
+    public void setPercentage(float perAux,int valueMax){
+        float aux = (float)(perAux + (timeMin/rataCuantum)*100/valueMax);
+        if (aux >= 100) {
             percentage = 100;
         }else{
             percentage = perAux;
