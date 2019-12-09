@@ -398,7 +398,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     }
     
     private int generatePid(){
-        System.out.println("prde_ ");
+//        System.out.println("prde_ ");
         if (availabilityPID.size()>0) {
             for (int i = 0; i < availabilityPID.size(); i++) {
                 if (availabilityPID.get(i)!=(i+1)) {
