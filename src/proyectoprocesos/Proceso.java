@@ -24,7 +24,11 @@ public class Proceso extends javax.swing.JDialog {
         timeMin = generateRandomNumber(10, 100);
         priority = generateRandomNumber(1, 3);
         userResponse = generateRandomNumber(0, 2);
-        auxUserResponse = 1;
+        if (userResponse == 0) {
+            auxUserResponse = 0;
+        }else{
+            auxUserResponse = 2;
+        }
         rataCuantum = 5;
         percentage = 0;
     }
@@ -35,7 +39,11 @@ public class Proceso extends javax.swing.JDialog {
         timeMin = timeMini;
         priority = generateRandomNumber(1, 3);
         userResponse = userRespon;
-        auxUserResponse = 1;
+        if (userResponse == 0) {
+            auxUserResponse = 0;
+        }else{
+            auxUserResponse = 2;
+        }
         rataCuantum = 5;
         percentage = perAux;
     }
