@@ -344,6 +344,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     }//GEN-LAST:event_stepByStepMouseReleased
 
     private void manejoEspecialList3(){
+//        ArrayList<Integer> arrayindex = new ArrayList();
         if (arraylistAux2.size() > 0) {
 //            System.out.println("error1");
 //            System.out.println("tamaño arraylistaux2: "+arraylistAux2.size());
@@ -351,7 +352,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
                 System.out.println("error2");
 //                System.out.println("tamaño prueba: "+arraylistAux2.get(i).getUserResponse());
                 if (arraylistAux2.get(i).getUserResponse()>0) {
-//                    System.out.println("error3");
+                    System.out.println("error3");
                     if (arraylistAux2.get(i).getAuxUserResponse() == 0) {
                         System.out.println("error4");
                         Proceso newProcess = new Proceso(arraylistAux2.get(i).getNameProc(),
@@ -361,8 +362,10 @@ public class VentanaPrincipal extends javax.swing.JDialog {
                                                          arraylistAux2.get(i).getPercentage());
 //                        System.out.println("auxUserRes1: "+arraylistAux2.get(i).getAuxUserResponse());
 //                        System.out.println("por aqui debería pasar si auxUserRes es 0");
-                        modifyTable(newProcess);
                         arraylistAux2.remove(i);
+                        modifyTable(newProcess);
+//                        i--;
+//                        arrayindex.add(i);
 //                        removeList3();
 //                        modelList3.remove(i);
 //                        jList3.setModel(modelList3);
@@ -371,28 +374,45 @@ public class VentanaPrincipal extends javax.swing.JDialog {
                         System.out.println("error5");
                         System.out.println("auxUserRes2: "+arraylistAux2.get(i).getAuxUserResponse());
                         arraylistAux2.get(i).setAuxUserResponse(arraylistAux2.get(i).getAuxUserResponse()-1);
-                        removeList3();
+//                        removeList3();
                     }
                 }else{
-//                    System.out.println("error 5.1");
-                    Proceso newProcess = new Proceso(arraylistAux2.get(i).getNameProc(),
-                                                     arraylistAux2.get(i).getPid(),0,
-                                                     arraylistAux2.get(i).getTimeMin(),
-                                                     arraylistAux2.get(i).getPercentage());
-                    modifyTable(newProcess);
-                    arraylistAux2.remove(i);
-                    try {
-//                        System.out.println("modellist3:"+modelList3.toString());
-//                        jList3.remove(i);
-                        removeList3();
-//                        modelList3.remove(i);
-                    } catch (Exception e) {
-                        System.out.println("el error raro aqui 1.2");
+                    if (arraylistAux2.get(i).getAuxUserResponse() == 0){
+                        System.out.println("error5-11");
+                        Proceso newProcess = new Proceso(arraylistAux2.get(i).getNameProc(),
+                                                        arraylistAux2.get(i).getPid(),0,
+                                                        arraylistAux2.get(i).getTimeMin(),
+                                                        arraylistAux2.get(i).getPercentage());
+                       arraylistAux2.remove(i);
+   //                    arrayindex.add(i);
+                       modifyTable(newProcess);
+                    }else{
+                        System.out.println("error5-12");
+                        System.out.println("auxUserRes2: "+arraylistAux2.get(i).getAuxUserResponse());
+                        arraylistAux2.get(i).setAuxUserResponse(arraylistAux2.get(i).getAuxUserResponse()-2);
                     }
-//                    jList3.setModel(modelList3);
+//                    System.out.println("error 5.1");
+                    
+//                    i--;
+//                    try {
+//                        removeList3();
+//                    } catch (Exception e) {
+//                        System.out.println("el error raro aqui 1.2");
+//                    }
                 }
             }
         }
+//        for (int i = 0; i < arrayindex.size(); i++) {
+//            System.out.println("arrayindex borrado: "+arraylistAux2.get(arrayindex.get(i)).getNameProc());
+//            arraylistAux2.remove(arrayindex.get(i));
+//            System.out.println("arrayindex borrado1: "+arraylistAux2.get(arrayindex.get(i)).getNameProc());
+//        }
+//        for (int i = 0; i < arraylistAux2.size(); i++) {
+//            System.out.println("ajaii "+(i+1)+": "+arraylistAux2.get(i).getNameProc());
+//            
+////        }
+//        removeList3();
+//        arrayindex.clear();
 //        System.out.println("error7");
 //        double auxPorcentaje = arraylistAux2.get(arraylistAux2.size()-1).getPercentage();
 //        int auxTimemin = arraylistAux2.get(arraylistAux2.size()-1).getTimeMin();
@@ -419,10 +439,10 @@ public class VentanaPrincipal extends javax.swing.JDialog {
         System.out.println("removelist3: "+modelList3.size());
         if (modelList3.size()>0) {
             for (int i = 0; i < modelList3.size(); i++) {
-                modelList3.remove(0);
+                modelList3.remove(i);
             }
         }
-        
+        modelList3.removeAllElements();
         for (int i = 0; i < arraylistAux2.size(); i++) {
             String info = "<html><br>Nombre proc.: "+arraylistAux2.get(i).getNameProc()
                     + "<br>PID: "+arraylistAux2.get(i).getPid()
